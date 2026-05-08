@@ -2,20 +2,20 @@
 "update_url": "https://clients2.google.com/service/update2/crx",
 
 	"manifest_version": 3,
-	"name": "youstyle - simplified Youtube UI",
-    "short_name": "youstyle",
-	"version": "1.3.19",
+	"name": "YouTube Sidebar",
+    "short_name": "YouTube Sidebar",
+	"version": "2.2",
 	
 	"default_locale": "en",
-	"description":"Reorgnize the layout of youtube, tablize the comments/recommendation/...",
+	"description":"Fork of youstyle - Description,Comments,Related, Playlist, Chat in a Sidebar",
 	
     "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline';"
     },
     "icons": { 
-        "16": "images/youtubeStyle16.png",
-        "48": "images/youtubeStyle48.png",
-        "128": "images/youtubeStyle128.png"},
+        "16": "images/youtubesidebar16.png",
+        "48": "images/youtubesidebar48.png",
+        "128": "images/youtubesidebar128.png"},
 	"background":
 	{
 		"service_worker": "background.js"
@@ -39,10 +39,10 @@
 	{
 		"default_icon":
 		{
-			"19": "images/youtubeStyle19.png",
-			"38": "images/youtubeStyle38.png"
+			"19": "images/youtubesidebar19.png",
+			"38": "images/youtubesidebar38.png"
 		},
-		"default_title": "you style",
+		"default_title": "youtubesidebar",
         "default_popup": "menu.html"
 	},
 
