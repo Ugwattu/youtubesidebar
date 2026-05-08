@@ -1061,12 +1061,23 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
     //if (ret === false)
     //{
     //	setTimeout(addLoopButton, 1000);
-    var playcontroldiv = null;
-    playcontroldiv = movie_player.find(".ytp-chrome-controls");
+    var playcontroldiv = movie_player.find(".ytp-left-controls");
+    if (playcontroldiv.length == 0) {
+      playcontroldiv = movie_player.find(".ytp-chrome-controls");
+    }
 
     if (playcontroldiv.length == 0) {
       return;
     }
+
+    var refBtn = movie_player.find(".ytp-play-button");
+    var refSvg = refBtn.find("svg:first");
+    
+    // Get explicit dimensions or fallback to standard YouTube button sizes
+    var btnW = refBtn.width() || 46;
+    var btnH = refBtn.height() || 36;
+    var svgW = refSvg.attr("width") || "36";
+    var svgH = refSvg.attr("height") || "36";
 
     //movie_player = $('#movie_player');
 
@@ -1074,8 +1085,8 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
     if (playcontroldiv.find("#autoloopone").length != 0) {
       return;
     }
-    var loopsvgon = $(
-      '<svg id="svg_loop_on" width="100%" height="100%" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' +
+
+    var svgOnHtml = '<svg id="svg_loop_on" width="100%" height="100%" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' +
         " <defs>" +
         '  <path id="ytpaloop-10" d="M26.466,21.04 L30.966,16 L27.8,16 C26.873,11.435 22.841,8 18.001,8 C12.474,8 8,12.477 8,18 C8,23.523 12.474,28 18.001,28 C21.181,28 24.009,26.511 25.841,24.197 L24.005,22.361 C22.652,24.217 20.471,25.427 18.001,25.427 C13.899,25.427 10.569,22.101 10.569,18 C10.569,13.898 13.899,10.572 18.001,10.572 C21.407,10.572 24.268,12.871 25.142,16 L21.966,16 L26.466,21.04">' +
         " <animate></animate></path></defs>" +
@@ -1085,11 +1096,10 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
         '  <use xlink:href="#ytpaloop-10" class="ytp-svg-fill" id="svg_3"/>' +
         '  <text transform="rotate(-90.0,17.499988555908192,18.16667175292969)" font-style="italic" font-weight="bold" xml:space="preserve" text-anchor="middle" font-family="serif" font-size="14" id="svg_4" y="22.63334" x="17.79999" stroke-width="0" class="ytp-svg-fill hidden">8</text>' +
         " </g>" +
-        " </svg>",
-    );
+        " </svg>";
+
     // stroke="#ffffff"
-    var loopsvgoff = $(
-      '<svg id="svg_loop_off" width="100%" height="100%" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' +
+    var svgOffHtml = '<svg id="svg_loop_off" width="100%" height="100%" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' +
         " <defs>" +
         '  <path id="ytpaloop-10" d="M26.466,21.04 L30.966,16 L27.8,16 C26.873,11.435 22.841,8 18.001,8 C12.474,8 8,12.477 8,18 C8,23.523 12.474,28 18.001,28 C21.181,28 24.009,26.511 25.841,24.197 L24.005,22.361 C22.652,24.217 20.471,25.427 18.001,25.427 C13.899,25.427 10.569,22.101 10.569,18 C10.569,13.898 13.899,10.572 18.001,10.572 C21.407,10.572 24.268,12.871 25.142,16 L21.966,16 L26.466,21.04" fill="#cccccc" fill-opacity="0.5"> ' +
         " <animate></animate></path></defs>" +
@@ -1099,8 +1109,8 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
         '  <use xlink:href="#ytpaloop-10" class="ytp-svg-fill" id="svg_3"/>' +
         '  <text font-style="italic" font-weight="bold" xml:space="preserve" text-anchor="middle" font-family="serif" font-size="14" id="svg_4" y="22.63334" x="17.79999" stroke-width="0" class="ytp-svg-fill hidden" >0</text>' +
         " </g>" +
-        " </svg>",
-    );
+        " </svg>";
+
     /*
         ' <g> ' +
         '  <title>Layer 2</title>' +
@@ -1110,11 +1120,16 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
     var autoloopBtn = $(
       '<button class="ytp-button" id="autoloopone"> </button>',
     );
+    
+    // Ensure button has physical dimensions to be clickable
+    autoloopBtn.css({
+        "width": btnW + "px",
+        "height": btnH + "px",
+        "vertical-align": refBtn.css("vertical-align") || "top",
+        "margin-right": "10px"
+    });
 
-    autoloopBtn.append(loopsvgoff);
-    playcontroldiv.prepend(autoloopBtn);
-
-    playcontroldiv.find("#autoloopone").click(function () {
+    autoloopBtn.click(function () {
       if ($("#loop_left").length == 0) {
         var ret = addLoopChooser();
       }
@@ -1126,7 +1141,7 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
       let thisbtn = $(this);
       thisbtn.find("svg").remove();
       if (l.status === 0) {
-        thisbtn.append(loopsvgoff);
+        thisbtn.append(svgOffHtml);
         thisbtn[0].title = "Loop is Off";
         $("#loop_left").css("display", "none");
         $("#loop_right").css("display", "none");
@@ -1134,12 +1149,15 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
         if (movie_player.find("#loop_left").length == 0) {
           addLoopChooser();
         }
-        thisbtn.append(loopsvgon);
+        thisbtn.append(svgOnHtml);
         thisbtn[0].title = "Loop is On";
         $("#loop_left").css("display", "");
         $("#loop_right").css("display", "");
       }
     });
+
+    autoloopBtn.append(svgOffHtml);
+    autoloopBtn.prependTo(playcontroldiv);
   }
 
   function getCurrentStyle() {
