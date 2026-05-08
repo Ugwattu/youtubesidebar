@@ -1,0 +1,183 @@
+﻿#content-text.style-scope.ytd-comment-renderer {    margin-left:5px;}
+.rotate90{
+	transform:rotate(90deg);
+-webkit-transform:rotate(90deg);
+}
+.circle {
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+}
+.center{
+	display:table-cell;
+	vertical-align:middle;
+	text-align:center;
+}
+.red{
+	background: red;
+}
+.sbutton{
+	width:12px;height:12px
+}
+.rbutton{
+	display:table-cell;
+	vertical-align:middle;
+	text-align:center;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	cursor:pointer;
+}
+.button{
+	cursor:pointer;
+}
+.button:hover{
+	background: red;
+	color:white;
+}
+.circle48{
+    width:48px;
+    height:48px;
+    border-radius:48px
+}
+.hidden{display:none;}
+
+div#youtubestyle_menu_bar{
+    font-size:115%;
+    padding-bottom:10px;
+}
+
+div#loop_right.loop_right_a{
+    z-index:999;
+    position: absolute; 
+    top:-20px;left: 0px;
+    width:0px;height:0px;
+    border:8px solid transparent;
+    border-left-color:#ffffff;
+    border-bottom-color:#ffffff;
+    border-top-width:12px;
+    border-bottom-width:12px; 
+}
+
+div#loop_left.loop_left_a{
+    z-index:999; 
+    position: absolute;
+    top:-20px;left: 0px;
+    width:0px;height: 0px;
+    margin-left:-16px;
+    border:8px solid #ffffff;
+    border-left-color:transparent;
+    border-top-color:transparent;
+    border-top-width:12px;
+    border-bottom-width:12px; 
+}
+
+div#loop_right.loop_right_b{
+z-index:999;
+position: absolute;
+top:-24px; 
+width:0px;height: 0px;
+margin-left:-24px;
+border:8px solid transparent;
+border-right-color:#ffffff;
+border-top-color:#ffffff;
+border-top-width:12px;
+border-bottom-width:20px;
+border-right-width:4px;
+border-left-width:20px;
+}
+
+div#loop_left.loop_left_b{
+z-index:999;
+position: absolute;
+top:-24px; 
+width:0px;height: 0px;
+margin-left:0px;
+border:8px solid transparent;
+border-left-color:#ffffff;
+border-top-color:#ffffff;
+border-top-width:12px;
+border-bottom-width:20px;
+border-left-width:4px;
+border-right-width:20px;
+}
+
+
+button.btn_loop_on{
+background-image: 
+        url("data:image/svg+xml;utf8, "
+        '<svg width="100%" height="100%" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' 
+        ' <defs>' 
+        '  <path id="ytpaloop-10" d="M26.466,21.04 L30.966,16 L27.8,16 C26.873,11.435 22.841,8 18.001,8 C12.474,8 8,12.477 8,18 C8,23.523 12.474,28 18.001,28 C21.181,28 24.009,26.511 25.841,24.197 L24.005,22.361 C22.652,24.217 20.471,25.427 18.001,25.427 C13.899,25.427 10.569,22.101 10.569,18 C10.569,13.898 13.899,10.572 18.001,10.572 C21.407,10.572 24.268,12.871 25.142,16 L21.966,16 L26.466,21.04">' 
+        ' <animate></animate></path></defs>' 
+        ' <g>' 
+        '  <title>Layer 1</title>' 
+        '  <use xlink:href="#ytpaloop-10" class="ytp-svg-shadow" id="svg_2"/>' 
+        '  <use xlink:href="#ytpaloop-10" class="ytp-svg-fill" id="svg_3"/>' 
+        '  <text transform="rotate(-90.0,17.499988555908192,18.16667175292969)" font-style="italic" font-weight="bold" xml:space="preserve" text-anchor="middle" font-family="serif" font-size="14" id="svg_4" y="22.63334" x="17.79999" stroke-width="0" class="ytp-svg-fill">8</text>' 
+        ' </g>' 
+        ' </svg>'
+        );
+}
+
+div.setting_item{
+    border-bottom: 1px blue solid;
+    margin-top:10px;
+    width:100%;
+}
+
+.ystyle-theme-000{
+    font-size:150%;
+}
+
+#youtubestyle_menu_bar{
+display: flex;
+justify-content:center; 
+grid-template-columns: auto auto auto auto auto auto;
+width: 100%;
+}
+.ys_menu:first-of-type {
+}
+#youtubestyle_menu_bar>.ys_menu{
+display: flex;
+flex:1;
+}
+
+#youtubestyle_menu_bar>.ys_menu.btnstyle_a{
+flex:1;
+margin-right:5px;
+margin-top:5px;
+margin-bottom:5px;
+border-radius:20%;
+background:#dddddd;
+text-align: center;
+display: flex;
+padding-top:5px;
+padding-bottom:5px;
+color:black;
+}
+#youtubestyle_menu_bar>.ys_menu.btnstyle_a.focused{
+background:#555555;
+color:white;
+}
+
+.ys_menu>div{
+flex:1
+}
+#youtubestyle_menu_bar>.ys_menu>div.menutxt{
+text-align: center;
+margin:0 auto;
+display: inline-block;
+}
+.nobr{
+-float:left
+}
+
+.flex{
+display:flex;
+}
+.flex>*{
+flex:1;
+text-align: center;
+display: inline-block;
+}

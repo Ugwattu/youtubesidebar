@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Set Page Color Popup</title>
+    <style>
+    body {
+      background: #ffffff;
+      width: 280px;
+      padding: 15px;
+      text-align: center;
+      margin: 0;
+      font-family: sans-serif;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    div.menuicon{
+      padding: 0; 
+      margin: 0px;
+      width:50px;
+      height: 40px;
+      opacity:0;
+      display:inline-block
+    }
+    span.shortcut{
+	    color:gray;
+    }
+    div.current{
+        border:solid;
+        border-width:2px;
+        border-color:#0000ff;
+        background: #cc4444;
+    }
+    div.not{
+        width:204px;
+    }
+
+    #youtubestyle_settings_popup {
+      margin-top: 15px;
+      text-align: left;
+      color: #333;
+      font-size: 13px;
+    }
+    .setting_item {
+      margin-bottom: 12px;
+      padding: 5px;
+      border-top: 1px solid #eee;
+    }
+    .setting_item div {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    label {
+      cursor: pointer;
+    }
+
+     .toggle {
+      --width: 120px;
+      --height: 40px;
+
+      position: relative;
+      display: inline-block;
+      width: var(--width);
+      height: var(--height);
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+      border-radius: var(--height);
+      cursor: pointer;
+    }
+
+    .toggle input {
+      display: none;
+      margin:0 0 0 0; 
+    }
+
+    .toggle .slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--height);
+      background-color: #ccc;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .toggle .slider::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: calc(var(--height));
+      height: calc(var(--height));
+      border-radius: calc(var(--height) / 2);
+      background-color: #fff;
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+      transition: all 0.4s ease-in-out;
+    }
+
+    .toggle input:checked+.slider {
+      background-color: #0766ad;
+    }
+
+    .toggle input:checked+.slider::before {
+      transform: translateX(calc(var(--width) - var(--height)));
+    }
+
+    .toggle .labels {
+      position: absolute;
+      ---top: 12px;
+      padding-top:12px;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      font-size: 18px;
+      font-family: sans-serif;
+      transition: all 0.4s ease-in-out;
+      overflow: hidden;
+    }
+
+    .toggle .labels::after {
+      content: attr(data-off);
+      position: absolute;
+      right: 5px;
+      color: #4d4d4d;
+      opacity: 1;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+      transition: all 0.4s ease-in-out;
+    }
+
+    .toggle .labels::before {
+      content: attr(data-on);
+      position: absolute;
+      left: calc(var(--height) - var(--width) + 2px);
+      color: #ffffff;
+      opacity: 0;
+      text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.4);
+      transition: all 0.4s ease-in-out;
+    }
+
+    .toggle input:checked~.labels::after {
+      opacity: 0;
+      transform: translateX(calc(var(--width) - var(--height)));
+    }
+
+    .toggle input:checked~.labels::before {
+      opacity: 1;
+      transform: translateX(calc(var(--width) - var(--height)));
+    }
+
+    .hidden{display:none;}
+    .bgtransparent{
+          background-color:rgba(0, 0, 0, 0.5);
+    }
+    </style>
+  </head>
+  <body class='transparent body'>
+  <label class="toggle bgtransparent">
+    <input id='toggleswitcher' type="checkbox">
+    <span class="slider bgtransparent"></span>
+    <span class="labels" data-on="ON" data-off="OFF"></span>
+  </label>
+  <div id="youtubestyle_settings_popup"></div>
+  <script src="jquery-3.3.1.min.js"></script>
+  <script src="vmenu.js">
+  </script>
+  </body>
+  </html>
