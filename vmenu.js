@@ -84,9 +84,9 @@ function createSettingsUI(settings) {
         var btnStyleDom = $(`
 	    <div id='ystyle_btn_style_popup' class="setting_item ">
 	    <div>Button Style(refresh to effect)</div>
-	    <input type='radio' class='ystyle_btn_style' name='ystyle_btn_style_popup' id='ystyle_btn_style_google_popup' value='0'> <label for='ystyle_btn_style_google_popup'>google</label>
+	    <input type='radio' class='ystyle_btn_style' name='ystyle_btn_style_popup' id='ystyle_btn_style_google_popup' value='0'> <label for='ystyle_btn_style_google_popup'>Google</label>
 	    <br>
-	    <input type='radio' class='ystyle_btn_style' name='ystyle_btn_style_popup' id='ystyle_btn_style_you_popup' value='1'> <label for='ystyle_btn_style_you_popup'>simple</label>
+	    <input type='radio' class='ystyle_btn_style' name='ystyle_btn_style_popup' id='ystyle_btn_style_you_popup' value='1'> <label for='ystyle_btn_style_you_popup'>Simple</label>
 	    </div>
 	    `);
         settingsDom.append(btnStyleDom);

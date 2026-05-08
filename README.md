@@ -1,6 +1,12 @@
-# YouTube Sidebar
+<p align="center"><a href="Add link" target="_blank" rel="noreferrer noopener"><img width="250" alt="youTube-SideBar" src="https://raw.githubusercontent.com/Ugwattu/youtubesidebar/refs/heads/main/images/youtubesidebar.png"></a></p>
+<p align="center">Youtube Sidebar is an extension designed to <strong>simplify and enhance the Youtube user interface.</strong></p>
+<br/>
+<p align="center"><a rel="noreferrer noopener" href="Add Link"><img alt="Chrome Web Store" src="https://img.shields.io/badge/Chrome-141e24.svg?&style=for-the-badge&logo=google-chrome&logoColor=white"></a>  <a rel="noreferrer noopener" href="https://addons.mozilla.org/firefox/addon/youtubesidebar/"><img alt="Firefox Add-ons" src="https://img.shields.io/badge/Firefox-141e24.svg?&style=for-the-badge&logo=firefox-browser&logoColor=white"></a>  <a rel="noreferrer noopener" href="https://darkreader.org/safari/"><img alt="Apple App Store" src="https://img.shields.io/badge/Safari-141e24.svg?&style=for-the-badge&logo=safari&logoColor=white"></a>  <a rel="noreferrer noopener" href="https://microsoftedge.microsoft.com/addons/detail/dark-reader/ifoakfbpdcdoeenechcleahebpibofpc/"><img alt="Edge Addons" src="https://img.shields.io/badge/Edge-141e24.svg?&style=for-the-badge&logo=microsoft-edge&logoColor=white"></a>  <a el="noreferrer noopener" href="https://addons.thunderbird.net/thunderbird/addon/darkreader"><img alt="Thunderbird" src="https://img.shields.io/badge/Thunderbird-141e24.svg?&style=for-the-badge&logo=thunderbird&logoColor=white"></a>
 
-YouTube Sidebar is a Chrome extension designed to simplify and enhance the YouTube user interface. It reorganizes page elements—such as comments, video descriptions, related videos, and playlists—into a clean, tabbed sidebar, allowing for a more focused viewing experience.
+<h2 align="center">Youtube Sidebar</h2>
+<br/>
+<p align="center">YouTube Sidebar is a extension designed to <strong>simplify and enhance the YouTube user interface</strong>. It reorganizes page elements—such as <strong>comments, video descriptions, related videos, and playlists</strong>—into a clean, <strong>tabbed sidebar</strong>, allowing for a more focused viewing experience</p>
+<br/>
 
 ## Features
 
@@ -19,23 +25,8 @@ Includes a custom A-B loop functionality directly integrated into the YouTube pl
 
 ### 3. Customizable Settings
 Accessible via the extension popup or the on-page settings UI:
-*   **Sidebar Width**: Choose between Default, Extra Wide, or "Super Extra Wide" (XXL) to fit your screen.
 *   **Default Tab**: Set which tab (Meta, Comments, Related, or List) opens by default.
 *   **Button Styles**: Toggle between a Google-inspired style or a simplified theme.
-
-## Installation Chrome
-
-1.  Clone or download this repository.
-2.  Open Chrome and navigate to `chrome://extensions/`.
-3.  Enable **Developer mode** in the top right corner.
-4.  Click **Load unpacked** and select the project folder.
-
-## Installation Firefox
-
-1.  Clone or download this repository.
-2.  Open Chrome and navigate to `addons.mozilla.org/`.
-3.  Enable **Developer mode** in the top right corner.
-4.  Click **Load unpacked** and select the project folder.
 
 ## Technical Overview
 
