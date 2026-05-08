@@ -4,7 +4,7 @@
 	"manifest_version": 3,
 	"name": "YouTube Sidebar",
     "short_name": "YouTube Sidebar",
-	"version": "2.2",
+	"version": "2.3",
 	
 	"default_locale": "en",
 	"description":"Fork of youstyle - Description,Comments,Related, Playlist, Chat in a Sidebar",
