@@ -562,98 +562,6 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
 
     function createSettingsUI() {
       if (true) {
-        var sidebarWidthDom = $(`
-            <div id='ystyle_width' class="setting_item style-scope yt-simple-endpoint ">
-            <div>Width of right side bar</div>
-            <input type='radio' class='ystyle_side_width' name='ystyle_side_width' id='ystle_side_width_default' value=0 checked> <label for='ystle_side_width_default'>Default</label>
-            <br>
-            <input type='radio' class='ystyle_side_width' name='ystyle_side_width' id='ystle_side_width_xl' value='xl'> <label for='ystle_side_width_xl'>Extra Wide</label>
-            <br>
-            <input type='radio' class='ystyle_side_width' name='ystyle_side_width' id='ystle_side_width_xxl' value='xxl'> <label for='ystle_side_width_xxl'>Super Extra Wide </label>
-            </div>
-            `);
-        //<input type='radio' class='ystyle_side_width' name='ystyle_side_width' id='ystle_side_width_xl2' value='xl2'> <label for='ystle_side_width_xl2'>Extra Wide on Video</label>
-        //<br>
-        settingsDom.append(sidebarWidthDom);
-        sidebarWidthDom.find("input.ystyle_side_width").change(function () {
-          let value = this.value;
-          let columns = columnSecondary.parent();
-          function restoreWidth() {
-            columnSecondary.css("width", "");
-            columnSecondary.css("padding-right", "");
-            columns.css("max-width", "");
-            columns.css("margin-right", "");
-            columns.css("margin", "");
-          }
-          restoreWidth();
-
-          localStorage.setItem("side_width", value);
-
-          {
-            if (value == 0) {
-              // restore to default
-            } else if (value === "xxl") {
-              // fit to window
-              let newWidth =
-                columns.parent().width() -
-                (columnPrimary.outerWidth(true) +
-                  (columnPrimary.outerWidth(true) -
-                    columnPrimary.outerWidth()));
-              columns.css("max-width", "3000px");
-              columns.css("margin", "0px");
-              columnSecondary.css("width", `${newWidth}px`);
-              columnSecondary.css("padding-right", "0");
-            } else if (value === "xl2") {
-              // fit to window
-              let oldMarginRight =
-                (columns.parent().width() - columns.width()) / 2;
-              let oldMarginLeft = oldMarginRight;
-              let newSecondaryWidth =
-                columnSecondary.outerWidth(true) + oldMarginRight;
-              let thevideo = columnPrimary.find("video");
-              let w = thevideo.width();
-              let h = thevideo.height();
-              let ratio = w / h;
-              let newWidth = columns.parent().width() - columnSecondary.width();
-              let newHeight = (h * newWidth) / w;
-              thevideo.css("width", `${newWidth}px`);
-              thevideo.css("height", `${newHeight}px`);
-              columns.css("max-width", "4000px");
-              columns.css("margin", "0px");
-              columnPrimary
-                .find("div.ytp-chrome-bottom")
-                .css("width", `${newWidth}px`);
-              columnPrimary
-                .find("div.ytp-chapter-hover-container")
-                .css("width", `${newWidth}px`);
-              columnSecondary.css("width", `${newSecondaryWidth}px`);
-              columnSecondary.css("padding-right", "0px");
-            } else if (value === "xl") {
-              // fit to window
-              let oldMarginRight =
-                (columns.parent().width() - columns.width()) / 2;
-              let oldMarginLeft = oldMarginRight;
-              let newWidth = columnSecondary.outerWidth(true) + oldMarginRight;
-              let w000 = columnPrimary.width();
-              let w001 = columnPrimary.outerWidth(true);
-              let maxWidthColumns = w001 + newWidth;
-              columns.css("max-width", `${maxWidthColumns}px`);
-              columns.css("margin-left", `${oldMarginLeft}px`);
-              columnSecondary.css("width", `${newWidth}px`);
-              columnSecondary.css("padding-right", "0px");
-            }
-          }
-        });
-
-        side_width = localStorage.getItem("side_width");
-        if (side_width == "xl") {
-          sidebarWidthDom.find("#ystle_side_width_xl").click();
-        } else if (side_width == "xxl") {
-          sidebarWidthDom.find("#ystle_side_width_xxl").click();
-        }
-      }
-
-      if (true) {
         var defaulttabDom = $(`
 	    <div id='ystyle_defaulttab' class="setting_item style-scope yt-simple-endpoint ">
 	    <div>Default tab of the right side bar</div>
@@ -796,12 +704,6 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
     //recommendsdiv.show();
     //recommendsdiv = $('#watch7-sidebar-contents');
     //recommendsdiv.show();
-
-    // restore the width of side bar
-    let columns = columnSecondary.parent();
-    columnSecondary.css("width", "");
-    columns.css("max-width", "");
-    columns.css("margin", "");
   }
 
   function getVideoId() {
@@ -1206,7 +1108,6 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
         sendResponse({ 
             settings: {
                 style: current_style,
-                side_width: localStorage.getItem("side_width") || "0",
                 default_tab: localStorage.getItem("default_tab") || "2",
                 menu_btn_style: localStorage.getItem("menu_btn_style") || "0"
             }
@@ -1221,9 +1122,7 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
           
           // Find the corresponding setting element in the on-page settings UI and trigger it
           let $selector = null;
-          if (msg.key === "side_width") {
-              $selector = $(`#ystyle_width input[value="${msg.value}"]`);
-          } else if (msg.key === "default_tab") {
+          if (msg.key === "default_tab") {
               $selector = $(`#ystyle_defaulttab input[value="${msg.value}"]`);
           } else if (msg.key === "menu_btn_style") {
               $selector = $(`#ystyle_btn_style input[value="${msg.value}"]`);
