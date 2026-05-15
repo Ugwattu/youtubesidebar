@@ -42,8 +42,6 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
     related: "Related",
     meta: "Meta",
     settings: "Settings",
-    comments_hint:
-      "The block of <strong> comments </strong>is moved into right sidebar.",
     chat: "Chat",
   };
   var tab_divs = {};
@@ -435,7 +433,6 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
       commentsdiv,
       $(
         "<div id='comments_holder_old' class='action-panel-content yt-uix-expander yt-uix-expander-collapsed yt-card yt-card-has-padding'>" +
-          menu_titles.comments_hint +
           "</div>",
       ),
       "comments_menu",
