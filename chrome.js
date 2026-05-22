@@ -220,15 +220,91 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
           that.hide();
         }
       });
+
       Object.entries(tab_divs).forEach(function ([key, tabdiv]) {
-        // tab_divs[menuid] = { 'div':thediv, "placeholder":placeholder, 'menuid':menuid} // this menuid is not that menuid
         let thediv = tabdiv.div;
         if (thediv[0].id == menuid) {
-          thediv.detach().appendTo(sidebardiv);
-          thediv.show();
+
+          // === LAYER FIX: Seamless Visual Projection Layer for Chat ===
+          if (key === "chat_menu") {
+            columnSecondary.css("position", "relative");
+
+            var menuHeight = $("#youtubestyle_menu_bar").outerHeight() || 45;
+
+            // Apply priority overrides to completely neutralize container lines/shadows
+            thediv.each(function() {
+              this.style.setProperty("position", "absolute", "important");
+              
+              // Add 5px offset to push it down from the menu bar
+              this.style.setProperty("top", (menuHeight + 20) + "px", "important");
+              
+              // Shift 5px from the left edge
+              this.style.setProperty("left", "5px", "important");
+              
+              // Reduce width by 10px total to accommodate 5px left margin + 5px right margin
+              this.style.setProperty("width", "calc(100% - 10px)", "important");
+              
+              // Reduce height by 10px total to accommodate 5px top margin + 5px bottom margin
+              this.style.setProperty("height", (sidebarHeight - 10) + "px", "important");
+              
+              this.style.setProperty("z-index", "9999", "important");
+              this.style.setProperty("background", "var(--yt-spec-base-background, var(--yt-spec-general-background, #0f0f0f))", "important");
+              this.style.setProperty("border", "none", "important");
+              this.style.setProperty("box-shadow", "none", "important");
+              this.style.setProperty("outline", "none", "important");
+              this.style.setProperty("margin", "0px", "important"); // Keep at 0px to prevent layout distortion on absolute properties
+              this.style.setProperty("padding", "0px", "important");
+              this.style.setProperty("display", "block", "important");
+              
+              // Match YouTube's native modern sidebar panel rounding
+              this.style.setProperty("border-radius", "12px", "important");
+              this.style.setProperty("overflow", "hidden", "important");
+            });
+
+            thediv.show().removeAttr("hidden").removeAttr("collapsed");
+
+            // Native configuration for structural inner components
+            thediv.find("iframe, #chatframe, ytd-live-chat-frame, #framework-container").each(function() {
+              this.style.setProperty("width", "100%", "important");
+              this.style.setProperty("height", "100%", "important");
+              this.style.setProperty("margin", "0px", "important");
+              this.style.setProperty("padding", "0px", "important");
+              this.style.setProperty("display", "block", "important");
+              
+              // REMOVED: border, box-shadow, outline, and border-radius lines 
+              // are gone here to let YouTube render its own native internal styles safely.
+            });
+          } else {
+            thediv.detach().appendTo(sidebardiv);
+            thediv.show();
+          }
+
         } else {
-          thediv.hide();
-          thediv.detach().insertBefore(tabdiv.placeholder);
+
+          // === LAYER RESET: Revert properties cleanly when leaving Chat tab ===
+          if (key === "chat_menu") {
+            thediv.hide();
+            thediv.each(function() {
+              this.style.setProperty("position", "");
+              this.style.setProperty("top", "");
+              this.style.setProperty("left", "");
+              this.style.setProperty("width", "");
+              this.style.setProperty("height", "");
+              this.style.setProperty("z-index", "");
+              this.style.setProperty("background", "");
+              this.style.setProperty("border", "");
+              this.style.setProperty("box-shadow", "");
+              this.style.setProperty("outline", "");
+              this.style.setProperty("margin", "");
+              this.style.setProperty("padding", "");
+              this.style.setProperty("border-radius", "");
+              this.style.setProperty("overflow", "");
+            });
+          } else {
+            thediv.hide();
+            thediv.detach().insertBefore(tabdiv.placeholder);
+          }
+
         }
       });
       cur_tab = menuid;
