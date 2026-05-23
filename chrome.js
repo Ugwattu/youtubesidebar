@@ -491,17 +491,31 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
         "enable_tab_meta_key",
         0,
       );
-
-      menu.find("#meta_menu").click(function () {
-        let myexpand = metadiv.find("#expand");
-        myexpand.css("right", 0);
-        myexpand.click();
+      
+      // 1. Target the outer container wrapper so the click registers anywhere on the button
+      menu.find("div.ys_menu.meta_menu").click(function () {
+        // 2. Use a short timeout to let the tab finish transitioning/rendering
+        setTimeout(function () {
+          // 3. Fallbacks for modern YouTube description expanders across layout variations
+          let myexpand = metadiv.find("#expand, #expand-button, ytd-text-inline-expander[collapsed], #description-inline-expander[collapsed]");
+          
+          if (myexpand.length > 0) {
+            myexpand.css("right", 0);
+            // 4. Trigger native element click rather than jQuery click for framework safety
+            myexpand.each(function() {
+              if (typeof this.click === 'function') {
+                this.click();
+              }
+            });
+          }
+        }, 50);
       });
+
       metadiv.append(
         columnPrimary
           .find("#below")
           .find("div#contents.style-scope.ytd-rich-metadata-row-renderer"),
-      ); //.css("display", "none");
+      );
     }
 
     // tablize comments
