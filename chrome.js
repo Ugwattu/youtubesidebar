@@ -316,7 +316,7 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
       if (placeholder != undefined) {
         placeholder.insertBefore(thediv);
       }
-      if (menuid == "meta_menu" || "chat_menu" == menuid) {
+      if (menuid == "meta_menu" || "chat_menu" == menuid || menuid == "list_menu") {
         tab_divs[menuid] = {
           div: thediv,
           placeholder: placeholder,
