@@ -1,167 +1,158 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Set Page Color Popup</title>
-    <style>
-    body {
-      background: #ffffff;
-      width: 280px;
-      padding: 15px;
-      text-align: center;
-      margin: 0;
-      font-family: sans-serif;
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
+<head>
+<meta charset="UTF-8">
+<title>YouTube Sidebar</title>
 
-    div.menuicon{
-      padding: 0; 
-      margin: 0px;
-      width:50px;
-      height: 40px;
-      opacity:0;
-      display:inline-block
-    }
-    span.shortcut{
-	    color:gray;
-    }
-    div.current{
-        border:solid;
-        border-width:2px;
-        border-color:#0000ff;
-        background: #cc4444;
-    }
-    div.not{
-        width:204px;
-    }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    #youtubestyle_settings_popup {
-      margin-top: 15px;
-      text-align: left;
-      color: #333;
-      font-size: 13px;
-    }
-    .setting_item {
-      margin-bottom: 12px;
-      padding: 5px;
-      border-top: 1px solid #eee;
-    }
-    .setting_item div {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-    label {
-      cursor: pointer;
-    }
+body{
+    width:300px;
+    padding:12px;
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:#ffffff;
+    color:#222;
+}
 
-     .toggle {
-      --width: 120px;
-      --height: 40px;
+.header{
+    margin-bottom:12px;
+}
 
-      position: relative;
-      display: inline-block;
-      width: var(--width);
-      height: var(--height);
-      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
-      border-radius: var(--height);
-      cursor: pointer;
-    }
+.header h1{
+    font-size:16px;
+    font-weight:600;
+}
 
-    .toggle input {
-      display: none;
-      margin:0 0 0 0; 
-    }
+.card{
+    background:#fafafa;
+    border:1px solid #e6e6e6;
+    border-radius:10px;
+    padding:10px;
+    margin-bottom:10px;
+}
 
-    .toggle .slider {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: var(--height);
-      background-color: #ccc;
-      transition: all 0.4s ease-in-out;
-    }
+.row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
 
-    .toggle .slider::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: calc(var(--height));
-      height: calc(var(--height));
-      border-radius: calc(var(--height) / 2);
-      background-color: #fff;
-      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
-      transition: all 0.4s ease-in-out;
-    }
+.section-title{
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:8px;
+}
 
-    .toggle input:checked+.slider {
-      background-color: #0766ad;
-    }
+.radio-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px 12px;
+}
 
-    .toggle input:checked+.slider::before {
-      transform: translateX(calc(var(--width) - var(--height)));
-    }
+.option{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:13px;
+}
 
-    .toggle .labels {
-      position: absolute;
-      ---top: 12px;
-      padding-top:12px;
-      left: 0;
-      width: 100%;
-      height: 20px;
-      font-size: 18px;
-      font-family: sans-serif;
-      transition: all 0.4s ease-in-out;
-      overflow: hidden;
-    }
+input[type="radio"]{
+    margin:0;
+}
 
-    .toggle .labels::after {
-      content: attr(data-off);
-      position: absolute;
-      right: 5px;
-      color: #4d4d4d;
-      opacity: 1;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
-      transition: all 0.4s ease-in-out;
-    }
+.switch{
+    position:relative;
+    display:inline-block;
+    width:44px;
+    height:24px;
+}
 
-    .toggle .labels::before {
-      content: attr(data-on);
-      position: absolute;
-      left: calc(var(--height) - var(--width) + 2px);
-      color: #ffffff;
-      opacity: 0;
-      text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.4);
-      transition: all 0.4s ease-in-out;
-    }
+.switch input{
+    opacity:0;
+    width:0;
+    height:0;
+}
 
-    .toggle input:checked~.labels::after {
-      opacity: 0;
-      transform: translateX(calc(var(--width) - var(--height)));
-    }
+.slider{
+    position:absolute;
+    inset:0;
+    background:#ccc;
+    border-radius:24px;
+    transition:.2s;
+    cursor:pointer;
+}
 
-    .toggle input:checked~.labels::before {
-      opacity: 1;
-      transform: translateX(calc(var(--width) - var(--height)));
-    }
+.slider:before{
+    content:"";
+    position:absolute;
+    height:18px;
+    width:18px;
+    left:3px;
+    top:3px;
+    background:white;
+    border-radius:50%;
+    transition:.2s;
+}
 
-    .hidden{display:none;}
-    .bgtransparent{
-          background-color:rgba(0, 0, 0, 0.5);
-    }
-    </style>
-  </head>
-  <body class='transparent body'>
-  <label class="toggle bgtransparent">
-    <input id='toggleswitcher' type="checkbox">
-    <span class="slider bgtransparent"></span>
-    <span class="labels" data-on="ON" data-off="OFF"></span>
-  </label>
-  <div id="youtubestyle_settings_popup"></div>
-  <script src="jquery-3.3.1.min.js"></script>
-  <script src="vmenu.js">
-  </script>
-  </body>
-  </html>
+input:checked + .slider{
+    background:#1a73e8;
+}
+
+input:checked + .slider:before{
+    transform:translateX(20px);
+}
+
+.footer{
+    border-top:1px solid #e6e6e6;
+    padding-top:8px;
+    text-align:center;
+    font-size:12px;
+}
+
+.footer a{
+    color:#1a73e8;
+    text-decoration:none;
+}
+
+.footer a:hover{
+    text-decoration:underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>YouTube Sidebar</h1>
+</div>
+
+<div class="card">
+    <div class="row">
+        <span>Extension Enabled</span>
+        <label class="switch">
+            <input id="toggleswitcher" type="checkbox">
+            <span class="slider"></span>
+        </label>
+    </div>
+</div>
+
+<div id="settings-container"></div>
+
+<div class="footer">
+    <a href="https://ugwattu.github.io/YouTube-SideBar-website/" target="_blank">
+        Website
+    </a>
+    &nbsp;•&nbsp;
+    <a href="https://github.com/Ugwattu/youtubesidebar/issues" target="_blank">
+        Report Issue
+    </a>
+</div>
+
+<script src="vmenu.js"></script>
+</body>
+</html>
