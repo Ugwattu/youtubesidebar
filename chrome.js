@@ -193,16 +193,64 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
     $("<br>").insertAfter(menu);
 
     updateMenu = function () {
-      // show chat/list ?
+      // 1. Show/Hide Chat and List Divs
       if (chatdiv.children().length > 1) {
         menu.find("#chat_menu").parent().parent().css("display", "");
       } else {
         menu.find("#chat_menu").parent().parent().css("display", "none");
       }
+      
       if (playlistdiv.find("#items").children().length > 0) {
         menu.find("#list_menu").parent().parent().css("display", "");
       } else {
         menu.find("#list_menu").parent().parent().css("display", "none");
+      }
+
+      // 2. Dynamic Segmented Button Logic
+      if (button_style == BUTTON_STYLE_GOOGLE) {
+        // Fetch only the tabs that are currently visible on the screen
+        var visibleItems = menu.find(".ys_menu").filter(function() {
+            return $(this).css("display") !== "none";
+        }).get();
+
+        // Reset all native classes and border overrides to calculate cleanly
+        menu.find(".menutxt")
+            .removeClass("ytSpecButtonShapeNextSegmentedStart ytSpecButtonShapeNextSegmentedEnd")
+            .css({
+                "border-top-left-radius": "",
+                "border-bottom-left-radius": "",
+                "border-top-right-radius": "",
+                "border-bottom-right-radius": ""
+            });
+
+        if (visibleItems.length > 0) {
+            // Apply your suggested logic: all visible buttons EXCEPT the last get 'SegmentedStart'
+            for (var i = 0; i < visibleItems.length - 1; i++) {
+                var $menutxt = $(visibleItems[i]).find(".menutxt");
+                $menutxt.addClass("ytSpecButtonShapeNextSegmentedStart");
+
+                // Flatten the left side of middle buttons for a seamless connection.
+                // (Because 'SegmentedStart' natively rounds the left corners)
+                if (i > 0) {
+                    $menutxt.css({
+                        "border-top-left-radius": "0",
+                        "border-bottom-left-radius": "0"
+                    });
+                }
+            }
+
+            // The last visible button always gets 'SegmentedEnd'
+            var $lastTxt = $(visibleItems[visibleItems.length - 1]).find(".menutxt");
+            $lastTxt.addClass("ytSpecButtonShapeNextSegmentedEnd");
+            
+            // If it's not the ONLY button, flatten its left side to connect cleanly to the stroke
+            if (visibleItems.length > 1) {
+                 $lastTxt.css({
+                    "border-top-left-radius": "0",
+                    "border-bottom-left-radius": "0"
+                });
+            }
+        }
       }
     };
 
@@ -325,14 +373,14 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
       } else {
         thediv.detach().appendTo(sidebardiv);
       }
-      thediv.hide();
-      thediv.addClass("ystyle_tab");
-      let mymenu = $(
-        `<div  class='ys_menu title nobr ${menuid}'><div class='nobr menutxt flex ${
-          menuid
-        }'><span href='javascript:;' id='${menuid}'>${menutitle}</span></div></div>`,
-      );
-      menu.append(mymenu);
+thediv.hide();
+       thediv.addClass("ystyle_tab");
+       let mymenu = $(
+         `<div  class='ys_menu title nobr ${menuid}'><div class='nobr menutxt flex ${
+           menuid
+         }'><span href='javascript:;' id='${menuid}'>${menutitle}</span></div></div>`,
+       );
+       menu.append(mymenu);
       var the_menu = menu.find("#" + menuid);
       /*
       the_menu.click(function() {
@@ -644,16 +692,28 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
       let pad = columnSecondary.innerHeight() - columnSecondary.height();
       sidebarHeight = window.innerHeight - mastheader.height() - 140 - pad;
     }
-    if (button_style == BUTTON_STYLE_GOOGLE) {
-      menu
-        .find(".menutxt")
-        .removeClass("flex")
-        .addClass(
-          "ytSpecButtonShapeNextHost ytSpecButtonShapeNextTonal ytSpecButtonShapeNextMono ytSpecButtonShapeNextSizeM",
-        );
-    } else {
-      menu.find(".ys_menu").addClass("btnstyle_a");
-    }
+if (button_style == BUTTON_STYLE_GOOGLE) {
+       menu
+         .find(".menutxt")
+         .removeClass("flex")
+         .addClass(
+           "ytSpecButtonShapeNextHost ytSpecButtonShapeNextTonal ytSpecButtonShapeNextMono ytSpecButtonShapeNextSizeM",
+         );
+       
+       // Apply segmented button classes: first button gets SegmentedStart, last gets SegmentedEnd
+       var menuItems = menu.find(".ys_menu").get();
+       if (menuItems.length > 0) {
+         $(menuItems[0]).find(".menutxt").addClass("ytSpecButtonShapeNextSegmentedStart");
+         $(menuItems[menuItems.length - 1]).find(".menutxt").addClass("ytSpecButtonShapeNextSegmentedEnd");
+         
+         // Middle buttons get no border radius (seamless connection)
+         for (var i = 1; i < menuItems.length - 1; i++) {
+           $(menuItems[i]).find(".menutxt").addClass("middle-button");
+         }
+       }
+     } else {
+       menu.find(".ys_menu").addClass("btnstyle_a");
+     }
     /*
             sidebardiv.css('height', sidebarHeight);
             sidebardiv.css('overflow-y', 'scroll');
