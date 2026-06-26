@@ -547,7 +547,35 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
         "enable_tab_chat_key",
         0,
       );
+      // Auto-open on tab click
+      menu.find("div.ys_menu.chat_menu").click(function () {
+        if (typeof window.autoExpandChatElement === 'function') window.autoExpandChatElement();
+      });
     }
+
+    // Robust helper to automatically force YouTube's native Live Chat open
+    window.autoExpandChatElement = function() {
+      setTimeout(function () {
+        let liveChatFrame = $("ytd-live-chat-frame, #chat-container");
+        if (liveChatFrame.length > 0) {
+          if (liveChatFrame.attr("collapsed") !== undefined || liveChatFrame.hasClass("collapsed")) {
+            liveChatFrame.removeAttr("collapsed").removeClass("collapsed");
+          }
+          // Targets the internal button container used by YouTube to collapse/expand live chat
+          let showChatBtn = liveChatFrame.find("#show-hide-button ytd-toggle-button-renderer, #show-hide-button button, button:contains('Show chat')");
+          if (showChatBtn.length > 0) {
+            showChatBtn.each(function() {
+              // Only click the native toggle button if it isn't already expanded
+              if (this.getAttribute("aria-expanded") !== "true") {
+                if (typeof this.click === 'function') {
+                  this.click();
+                }
+              }
+            });
+          }
+        }
+      }, 500); // 500ms allows the frame and video stream to fully switch over
+    };
 
     if (playlistdiv.length == 1) {
       //playlistdiv.detach().appendTo(sidebardiv);
@@ -563,7 +591,36 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
         "enable_tab_list_key",
         0,
       );
+      
+// --- AUTO-OPEN PLAYLIST ON TAB BUTTON CLICK ---
+      $("#youtubestyle_menu_bar").find("div.ys_menu.list_menu").click(function () {
+          autoExpandPlaylistElement();
+      });
     }
+
+        // Define a robust element query helper that grabs the raw DOM node directly
+    window.autoExpandPlaylistElement = function() {
+      setTimeout(function () {
+        // Query the live DOM dynamically rather than relying on cached selectors
+        let livePlaylist = $("#columns #playlist, ytd-playlist-panel-renderer");
+        if (livePlaylist.length > 0) {
+          // Remove collapsed attributes enforced by YouTube layout structures
+          if (livePlaylist.attr("collapsed") !== undefined || livePlaylist.hasClass("collapsed")) {
+            livePlaylist.removeAttr("collapsed").removeClass("collapsed");
+          }
+          
+          // Locate internal collapse toggles or expand chevron buttons inside the wrapper
+          let expandBtn = livePlaylist.find("#playlist-action-menu ytd-toggle-button-renderer, button[aria-expanded='false'], #expand-button");
+          if (expandBtn.length > 0) {
+            expandBtn.each(function() {
+              if (typeof this.click === 'function') {
+                this.click();
+              }
+            });
+          }
+        }
+      }, 350); // Small interval allows the framework to update elements safely
+    };
 
     //menu.append('<div>&nbsp;</div>');
     menu.find("#comments_menu").click(function () {
@@ -1169,6 +1226,22 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
     addLoopButton();
     if (updateMenu) {
       updateMenu();
+    }
+    // --- AUTO-OPEN HANDLERS ON VIDEO CHANGE ---
+    let menuBar = $("#youtubestyle_menu_bar");
+    
+    // Check if the 'List' tab is focused
+    if (menuBar.find(".list_menu").hasClass("focused")) {
+      if (typeof window.autoExpandPlaylistElement === 'function') {
+        window.autoExpandPlaylistElement();
+      }
+    }
+    
+    // Check if the 'Chat' tab is focused
+    else if (menuBar.find(".chat_menu").hasClass("focused")) {
+      if (typeof window.autoExpandChatElement === 'function') {
+        window.autoExpandChatElement();
+      }
     }
   };
   //$('title').bind('DOMSubtreeModified', onTitleChange);
