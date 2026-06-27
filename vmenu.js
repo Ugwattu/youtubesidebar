@@ -48,7 +48,7 @@
             <div class="radio-grid">
                 <label class="option">
                     <input type="radio" name="default_tab" value="0" id="default_tab_meta">
-                    <span>Meta</span>
+                    <span>Info</span>
                 </label>
                 <label class="option">
                     <input type="radio" name="default_tab" value="1" id="default_tab_comments">

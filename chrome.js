@@ -40,7 +40,7 @@ chrome.runtime.sendMessage({ cmd: "ShowAppIcon" });
   var menu_titles = {
     comments: "Comments",
     related: "Related",
-    meta: "Meta",
+    meta: "Info",
     settings: "Settings",
     chat: "Chat",
   };
@@ -772,7 +772,7 @@ if (button_style == BUTTON_STYLE_GOOGLE) {
         var defaulttabDom = $(`
 	    <div id='ystyle_defaulttab' class="setting_item style-scope yt-simple-endpoint ">
 	    <div>Default tab of the right side bar</div>
-	    <input type='radio' class='ystyle_default_tab' name='ystyle_default_tab' id='ystyle_default_tab_meta' value='0'> <label for='ystyle_default_tab_meta'>Meta</label>
+	    <input type='radio' class='ystyle_default_tab' name='ystyle_default_tab' id='ystyle_default_tab_meta' value='0'> <label for='ystyle_default_tab_meta'>Info</label>
 	    <br>
 	    <input type='radio' class='ystyle_default_tab' name='ystyle_default_tab' id='ystyle_default_tab_comments' value='1'> <label for='ystyle_default_tab_comments'>Comments</label>
 	    <br>
